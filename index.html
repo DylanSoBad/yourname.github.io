@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dylan Alpha Hub</title>
+<title>Dylan Web3</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
 
@@ -20,79 +20,111 @@ body{
 background:var(--bg);
 color:#fff;
 font-family:'Space Grotesk';
+overflow-x:hidden;
+}
+
+/* BACKGROUND */
+.bg{
+position:fixed;
+width:100%;
+height:100%;
+z-index:-2;
+background:
+linear-gradient(rgba(0,255,245,0.05) 1px, transparent 1px),
+linear-gradient(90deg, rgba(0,255,245,0.05) 1px, transparent 1px);
+background-size:60px 60px;
+animation:grid 20s linear infinite;
+}
+
+@keyframes grid{
+0%{transform:perspective(500px) rotateX(60deg) translateY(0)}
+100%{transform:perspective(500px) rotateX(60deg) translateY(60px)}
+}
+
+.orb{
+position:fixed;
+width:300px;
+height:300px;
+border-radius:50%;
+filter:blur(60px);
+z-index:-1;
+animation:float 12s ease-in-out infinite;
+}
+
+.orb1{background:#00fff533;top:10%;left:10%}
+.orb2{background:#ff00ff33;bottom:10%;right:10%}
+
+@keyframes float{
+50%{transform:translate(40px,-30px)}
 }
 
 /* HERO */
 .hero{
-padding:80px 20px;
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
 text-align:center;
+padding:20px;
 }
 
 .title{
 font-family:'Orbitron';
-font-size:2.5rem;
+font-size:3rem;
 background:linear-gradient(90deg,#00fff5,#ff00ff);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 }
 
-.desc{
-margin-top:15px;
-opacity:.7;
-}
-
-/* LAYOUT */
-.container{
-max-width:1100px;
-margin:auto;
-padding:20px;
-display:grid;
-grid-template-columns:2fr 1fr;
-gap:30px;
-}
-
-/* BLOG */
-.post{
-background:#111;
-padding:20px;
-border-radius:12px;
-margin-bottom:20px;
-border:1px solid #222;
-}
-
-.post h3{margin-bottom:10px}
-
-.tag{
-font-size:12px;
-color:var(--cyan);
-margin-bottom:10px;
-display:block;
+.subtitle{
+margin-top:20px;
+opacity:0.7;
+max-width:600px;
 }
 
 .btn{
-display:inline-block;
-margin-top:10px;
+margin-top:30px;
+padding:12px 28px;
+border:1px solid var(--cyan);
+border-radius:30px;
 color:var(--cyan);
 text-decoration:none;
+transition:.3s;
 }
 
-/* SIDEBAR */
-.sidebar{
-position:sticky;
-top:20px;
+.btn:hover{
+background:var(--cyan);
+color:#000;
+box-shadow:0 0 20px var(--cyan);
 }
 
-.project{
-background:#111;
-padding:15px;
-border-radius:10px;
-margin-bottom:15px;
-border:1px solid #222;
+/* SECTION */
+.section{
+padding:80px 20px;
+max-width:1000px;
+margin:auto;
 }
 
-.project span{
-font-size:12px;
-color:#888;
+.section h2{
+font-family:'Orbitron';
+margin-bottom:30px;
+}
+
+/* CARD */
+.card{
+background:rgba(255,255,255,0.05);
+padding:20px;
+border-radius:16px;
+margin-bottom:20px;
+backdrop-filter:blur(10px);
+border:1px solid rgba(255,255,255,0.1);
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+box-shadow:0 0 20px rgba(0,255,245,0.2);
 }
 
 /* FOOTER */
@@ -104,78 +136,75 @@ opacity:.5;
 
 /* MOBILE */
 @media(max-width:768px){
-.container{grid-template-columns:1fr}
+.title{font-size:2rem}
 }
 </style>
 </head>
 
 <body>
 
+<div class="bg"></div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+
 <!-- HERO -->
-<div class="hero">
-    <div class="title">Dylan Alpha Hub</div>
-    <div class="desc">
-        I share real Web3 alpha, airdrop strategies & projects I'm farming.
-    </div>
-</div>
+<section class="hero">
+    <div class="title">Dylan</div>
 
-<div class="container">
-
-    <!-- BLOG -->
-    <div>
-
-        <div class="post">
-            <span class="tag">Airdrop</span>
-            <h3>Top 3 airdrop đang ngon tuần này</h3>
-            <p>List project có potential cao + cách farm nhanh.</p>
-            <a href="#" class="btn">Read →</a>
-        </div>
-
-        <div class="post">
-            <span class="tag">Guide</span>
-            <h3>Cách farm testnet không tốn tiền</h3>
-            <p>Chiến lược tối ưu để không bị burn vốn.</p>
-            <a href="#" class="btn">Read →</a>
-        </div>
-
-        <div class="post">
-            <span class="tag">Alpha</span>
-            <h3>Dự án mới: có thể x10</h3>
-            <p>Phân tích nhanh + cách vào sớm.</p>
-            <a href="#" class="btn">Read →</a>
-        </div>
-
+    <div class="subtitle">
+        Web3 Builder • AI • Trading Tools  
+        Focused on real value, not hype.
     </div>
 
-    <!-- SIDEBAR -->
-    <div class="sidebar">
+    <a href="#projects" class="btn">⚡ View Work</a>
+</section>
 
-        <div class="project">
-            <b>🔥 Shelby</b>
-            <span>Storage + AI</span>
-        </div>
+<!-- PROJECTS -->
+<section id="projects" class="section">
+    <h2>Projects</h2>
 
-        <div class="project">
-            <b>⚡ Decibel</b>
-            <span>Perp Trading</span>
-        </div>
-
-        <div class="project">
-            <b>💰 AllScale</b>
-            <span>Lending</span>
-        </div>
-
-        <div class="project">
-            <b>🚀 New Airdrop</b>
-            <span>Early stage</span>
-        </div>
-
+    <div class="card">
+        <h3>Trading Bot</h3>
+        <p>Automate volume & optimize profit strategy.</p>
     </div>
 
-</div>
+    <div class="card">
+        <h3>Airdrop Hunter</h3>
+        <p>System to track & farm high-value airdrops.</p>
+    </div>
+
+    <div class="card">
+        <h3>Web3 Content</h3>
+        <p>Sharing alpha, strategies, and real experience.</p>
+    </div>
+</section>
+
+<!-- SKILLS -->
+<section class="section">
+    <h2>Skills</h2>
+
+    <div class="card">
+        Web3 • Smart Contracts • Airdrop Strategy
+    </div>
+
+    <div class="card">
+        Frontend • UI/UX • Growth
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section">
+    <h2>Contact</h2>
+
+    <div class="card">
+        Twitter: @only__dylan <br>
+        Discord: only__violet <br>
+        Email: airdropdylan2@gmail.com
+    </div>
+</section>
 
 <div class="footer">
-© 2026 Dylan Alpha Hub
+© 2026 Dylan
 </div>
 
 </body>
