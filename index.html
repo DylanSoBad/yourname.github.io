@@ -1,96 +1,226 @@
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dylan Web3</title>
 
-export default function Home() {
-  const [dark, setDark] = useState(true);
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", dark);
-  }, [dark]);
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
 
-  return (
-    <div className="min-h-screen bg-black text-white transition-all duration-300">
-      {/* NAV */}
-      <nav className="fixed top-0 w-full backdrop-blur-xl bg-black/60 border-b border-white/10 z-50">
-        <div className="max-w-6xl mx-auto flex justify-between items-center p-4">
-          <div className="font-bold tracking-widest">⚡ DYLAN</div>
-          <div className="flex gap-6 text-sm">
-            <a href="#projects">Projects</a>
-            <a href="#blog">Blog</a>
-            <a href="#contact">Contact</a>
-          </div>
-          <button
-            onClick={() => setDark(!dark)}
-            className="text-xs px-3 py-1 border rounded"
-          >
-            {dark ? "Light" : "Dark"}
-          </button>
-        </div>
-      </nav>
-
-      {/* HERO */}
-      <section className="h-screen flex flex-col justify-center items-center text-center px-4">
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-5xl font-bold"
-        >
-          Hi, I'm Dylan
-        </motion.h1>
-        <p className="text-gray-400 mt-4 max-w-xl">
-          Building in Web3. Sharing alpha. Creating tools that actually make money.
-        </p>
-      </section>
-
-      {/* PROJECTS */}
-      <section id="projects" className="max-w-6xl mx-auto py-20 px-4">
-        <h2 className="text-3xl font-bold mb-10">Projects</h2>
-        <div className="grid md:grid-cols-3 gap-6">
-          {[1, 2, 3].map((p) => (
-            <motion.div
-              key={p}
-              whileHover={{ scale: 1.05 }}
-              className="p-6 border border-white/10 rounded-xl bg-white/5"
-            >
-              <h3 className="font-bold">Project {p}</h3>
-              <p className="text-sm text-gray-400 mt-2">
-                Web3 tool / trading / automation
-              </p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* BLOG (CMS MOCK) */}
-      <section id="blog" className="max-w-6xl mx-auto py-20 px-4">
-        <h2 className="text-3xl font-bold mb-10">Blog</h2>
-        <div className="grid md:grid-cols-2 gap-6">
-          {[
-            { title: "Airdrop Strategy", date: "2025" },
-            { title: "Web3 Lessons", date: "2024" },
-          ].map((post, i) => (
-            <div key={i} className="p-6 border border-white/10 rounded-xl">
-              <div className="text-xs text-cyan-400">{post.date}</div>
-              <h3 className="font-bold mt-2">{post.title}</h3>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* CONTACT */}
-      <section id="contact" className="max-w-4xl mx-auto py-20 px-4">
-        <h2 className="text-3xl font-bold mb-6">Contact</h2>
-        <div className="flex flex-col gap-4">
-          <a href="https://t.me/dylannote">Telegram</a>
-          <a href="https://x.com/only__dylan">Twitter</a>
-          <a href="mailto:airdropdylan2@gmail.com">Email</a>
-        </div>
-      </section>
-
-      <footer className="text-center text-gray-500 py-10">
-        © 2026 Dylan
-      </footer>
-    </div>
-  );
+body{
+    font-family: 'Orbitron', sans-serif;
+    background:#000;
+    color:#fff;
+    overflow-x:hidden;
 }
+
+/* BACKGROUND GLOW */
+.bg{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+}
+.bg div{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(120px);
+}
+.bg .c1{width:500px;height:500px;background:#00fff5;top:-100px;left:-100px;opacity:.2;}
+.bg .c2{width:400px;height:400px;background:#ff00ff;bottom:-100px;right:-100px;opacity:.2;}
+.bg .c3{width:300px;height:300px;background:#b000ff;top:50%;left:40%;opacity:.2;}
+
+/* NAV */
+nav{
+    position:fixed;
+    top:0;
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    padding:15px 40px;
+    backdrop-filter:blur(20px);
+    background:rgba(0,0,0,.4);
+    border-bottom:1px solid rgba(255,255,255,.1);
+}
+
+nav a{
+    margin-left:20px;
+    text-decoration:none;
+    color:#aaa;
+}
+nav a:hover{color:#00fff5}
+
+/* HERO */
+.hero{
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+.hero h1{
+    font-size:60px;
+    background:linear-gradient(90deg,#00fff5,#b000ff,#ff00ff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+    margin-top:20px;
+    color:#aaa;
+}
+
+.btn{
+    margin-top:30px;
+    padding:12px 25px;
+    border-radius:10px;
+    border:none;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.btn-primary{
+    background:linear-gradient(90deg,#00fff5,#0066ff);
+    color:#000;
+}
+
+.btn-secondary{
+    border:1px solid #ff00ff;
+    color:#ff00ff;
+    background:transparent;
+}
+
+/* SECTION */
+section{
+    padding:100px 40px;
+    max-width:1100px;
+    margin:auto;
+}
+
+.title{
+    text-align:center;
+    font-size:28px;
+    margin-bottom:40px;
+}
+
+/* GRID */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+/* CARD */
+.card{
+    padding:20px;
+    border-radius:15px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.1);
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px) scale(1.02);
+    box-shadow:0 0 30px rgba(0,255,245,.2);
+}
+
+/* CONTACT */
+.contact a{
+    margin:10px;
+    display:inline-block;
+    color:#aaa;
+}
+.contact a:hover{color:#00fff5}
+
+/* FOOTER */
+footer{
+    text-align:center;
+    padding:30px;
+    color:#555;
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg">
+    <div class="c1"></div>
+    <div class="c2"></div>
+    <div class="c3"></div>
+</div>
+
+<!-- NAV -->
+<nav>
+    <div>⚡ DYLAN</div>
+    <div>
+        <a href="#projects">Projects</a>
+        <a href="#blog">Blog</a>
+        <a href="#contact">Contact</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <h1>DYLAN WEB3</h1>
+    <p>Building alpha tools. Farming airdrops. Sharing Web3 knowledge.</p>
+    <div>
+        <button class="btn btn-primary">View Projects</button>
+        <button class="btn btn-secondary">Contact</button>
+    </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+    <div class="title">🚀 Projects</div>
+    <div class="grid">
+        <div class="card">
+            <h3>Trading Bot</h3>
+            <p>Auto volume + optimize profit</p>
+        </div>
+        <div class="card">
+            <h3>Airdrop Hunter</h3>
+            <p>Farm retroactive & testnet</p>
+        </div>
+        <div class="card">
+            <h3>Web3 Tool</h3>
+            <p>Build tools for crypto users</p>
+        </div>
+    </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog">
+    <div class="title">🧠 Blog</div>
+    <div class="grid">
+        <div class="card">
+            <h3>Airdrop Strategy</h3>
+            <p>2025</p>
+        </div>
+        <div class="card">
+            <h3>Web3 Lessons</h3>
+            <p>2024</p>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact">
+    <div class="title">📡 Contact</div>
+    <div style="text-align:center;">
+        <a href="https://t.me/dylannote">Telegram</a>
+        <a href="https://x.com/only__dylan">Twitter</a>
+        <a href="mailto:airdropdylan2@gmail.com">Email</a>
+    </div>
+</section>
+
+<footer>
+    ⚡ Built by Dylan
+</footer>
+
+</body>
+</html>
 
