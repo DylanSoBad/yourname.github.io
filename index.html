@@ -205,7 +205,14 @@ section{padding:120px 40px;max-width:1200px;margin:auto}
 .tilt-card:hover .card-tags span{border-color:rgba(0,255,245,.12);color:var(--text)}
 
 /* ═══ AIRDROP RESEARCH STYLES ═══ */
-.airdrop-tabs{display:flex;gap:6px;margin-bottom:24px;flex-wrap:wrap}
+.airdrop-search-wrapper{display:flex;gap:10px;margin-bottom:24px;max-width:600px;margin-inline:auto;position:relative}
+.airdrop-search-wrapper input{flex:1;padding:12px 20px;border-radius:var(--radius-sm);background:var(--card);border:1px solid var(--border);color:var(--text-light);font-family:'Inter',sans-serif;font-size:14px;outline:none;transition:all .3s}
+.airdrop-search-wrapper input:focus{border-color:var(--cyan);box-shadow:0 0 15px rgba(0,255,245,.15)}
+.airdrop-search-wrapper button{padding:0 24px;border-radius:var(--radius-sm);background:linear-gradient(135deg,var(--cyan),var(--purple));border:none;color:#000;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;transition:all .3s;display:flex;align-items:center;gap:8px}
+.airdrop-search-wrapper button:hover{transform:translateY(-2px);box-shadow:0 5px 20px rgba(0,255,245,.25)}
+.airdrop-search-wrapper button.loading{opacity:.7;pointer-events:none}
+.airdrop-search-wrapper button.loading i{animation:spin 1s linear infinite}
+.airdrop-tabs{display:flex;gap:6px;margin-bottom:24px;flex-wrap:wrap;justify-content:center}
 .atab{padding:7px 16px;border-radius:50px;border:1px solid var(--border);background:transparent;font-size:11px;color:var(--text-dim);cursor:pointer;transition:all .2s;font-family:'JetBrains Mono',monospace;letter-spacing:.3px;font-weight:600}
 .atab:hover{border-color:var(--border2);color:var(--text-light)}
 .atab.on{background:rgba(0,255,245,.08);color:var(--cyan);border-color:rgba(0,255,245,.2)}
@@ -425,6 +432,11 @@ footer p{font-size:11px;color:var(--text-dim);letter-spacing:2px}
 <section id="airdrop">
     <div class="section-header reveal"><div class="section-tag"><i class="fa-solid fa-crosshairs"></i> <span data-en="Alpha Research" data-vi="Nghiên Cứu Alpha">Alpha Research</span></div><div class="section-title" data-en="Airdrop Research" data-vi="Nghiên Cứu Airdrop">Airdrop Research</div><p class="section-desc" data-en="Curated list of high-potential airdrop opportunities with on-chain analysis." data-vi="Danh sách airdrop tiềm năng cao với phân tích on-chain.">Curated list of high-potential airdrop opportunities with on-chain analysis.</p></div>
 
+    <div class="airdrop-search-wrapper reveal">
+        <input type="text" id="aiSearchInput" placeholder="Nhập tên dự án để AI phân tích (VD: Ritual, Berachain)..." onkeypress="if(event.key==='Enter') searchAIProject()">
+        <button id="aiSearchBtn" onclick="searchAIProject()"><i class="fa-solid fa-magnifying-glass"></i> AI Search</button>
+    </div>
+
     <div class="airdrop-tabs reveal">
         <button class="atab on" data-at="all">All</button>
         <button class="atab" data-at="live">🟢 Live</button>
@@ -619,6 +631,38 @@ document.querySelectorAll('.atab').forEach(btn=>{
     renderAirdrops(btn.dataset.at);
   });
 });
+
+async function searchAIProject() {
+    const input = document.getElementById('aiSearchInput');
+    const btn = document.getElementById('aiSearchBtn');
+    const query = input.value.trim();
+    if(!query) return;
+    
+    btn.classList.add('loading');
+    btn.innerHTML = '<i class="fa-solid fa-spinner"></i> Đang tìm...';
+    
+    try {
+        const res = await fetch('/api/search?q=' + encodeURIComponent(query));
+        const data = await res.json();
+        
+        if(data.error) {
+            alert("Lỗi: " + data.error);
+        } else {
+            // Thêm dự án vào đầu danh sách
+            AIRDROPS.unshift(data);
+            // Render lại tất cả (chuyển về tab All)
+            document.querySelectorAll('.atab').forEach(b=>b.classList.remove('on'));
+            document.querySelector('.atab[data-at="all"]').classList.add('on');
+            renderAirdrops('all');
+        }
+    } catch (e) {
+        alert("Có lỗi xảy ra khi gọi API.");
+    } finally {
+        btn.classList.remove('loading');
+        btn.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i> AI Search';
+        input.value = '';
+    }
+}
 
 /* TYPING */
 const phrasesEN=['> deploying smart contracts...','> farming airdrop alpha...','> building DeFi tools...','> analyzing on-chain data...','> optimizing gas fees...'];
